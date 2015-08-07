@@ -1,3 +1,4 @@
+include_recipe 'nginx'
 # setup Unicorn service per app
 node[:deploy].each do |application, deploy|
 
