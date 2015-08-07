@@ -2,7 +2,11 @@ include_recipe 'nginx'
 # setup Unicorn service per app
 node[:deploy].each do |application, deploy|
 
-  deploy = node[:deploy][application]
+  #deploy = node[:deploy][application]
+
+  deploy.each do |key,value|
+    Chef::Log.debug("deploy[:#{key}] = '#{value}'")
+  end
 
   execute "restart Rails app #{application}" do
     cwd deploy[:current_path]
@@ -31,7 +35,7 @@ node[:deploy].each do |application, deploy|
     group "root"
     mode 0644
     variables({
-      :application => application  ### ここで代入している
+                :deploy => application  ### ここで代入している
     })
     notifies :restart, "service[nginx]"
   end
