@@ -1,0 +1,7 @@
+name             'opsworks-custom-cookbooks'
+maintainer       'nakano'
+maintainer_email 'nakano@temona.co.jp'
+license          'All rights reserved'
+description      'Installs/Configures opsworks-custom-cookbooks'
+long_description 'Installs/Configures opsworks-custom-cookbooks'
+version          '0.1.0'
