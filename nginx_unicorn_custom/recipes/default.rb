@@ -30,6 +30,9 @@ node[:deploy].each do |application, deploy|
     owner "root"
     group "root"
     mode 0644
+    variables({
+      :application => application  ### ここで代入している
+    })
     notifies :restart, "service[nginx]"
   end
 

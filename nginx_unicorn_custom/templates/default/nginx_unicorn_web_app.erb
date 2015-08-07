@@ -1,34 +1,34 @@
-upstream unicorn_<%= @deploy[:domains].first %> {
- server unix:<%= @deploy[:deploy_to]%>/shared/sockets/unicorn.sock fail_timeout=0;
+upstream unicorn_<%= @application[:domains].first %> {
+ server unix:<%= @application[:deploy_to]%>/shared/sockets/unicorn.sock fail_timeout=0;
 }
 
 server {
   listen 80;
-  server_name <%= @deploy[:domains].join(" ") %> <%= node[:hostname] %>;
+  server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
 
   client_max_body_size 4G;
   add_header 'Access-Control-Allow-Origin' *;
 
-  <% if @deploy[:log_format] %>
-    <% @deploy[:log_format].each do |log_format_name| %>
+  <% if @application[:log_format] %>
+    <% @application[:log_format].each do |log_format_name| %>
       <% if node[:nginx][:log_format][log_format_name] %>
-  access_log <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>.access.<%= log_format_name %>.log <%= log_format_name %>;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.access.<%= log_format_name %>.log <%= log_format_name %>;
       <% end %>
     <% end %>
   <% else %>
-  access_log <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>.access.log;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.access.log;
   <%end %>
 
   keepalive_timeout 5;
 
-  root <%= @deploy[:absolute_document_root] %>;
+  root <%= @application[:absolute_document_root] %>;
 
-  <% if @deploy[:nginx] && @deploy[:nginx][:client_max_body_size] %>
-    client_max_body_size <%= @deploy[:nginx][:client_max_body_size] %>;
+  <% if @application[:nginx] && @application[:nginx][:client_max_body_size] %>
+    client_max_body_size <%= @application[:nginx][:client_max_body_size] %>;
   <% end %>
 
   location / {
-  <% if @deploy[:nginx] && node[:nginx_basic_auth][:use] %>
+  <% if @application[:nginx] && node[:nginx_basic_auth][:use] %>
     auth_basic "Restricted";
     auth_basic_user_file /etc/nginx/.htpasswd;
   <% end %>
@@ -65,7 +65,7 @@ server {
     # If you don't find the filename in the static files
     # Then request it from the unicorn server
     if (!-f $request_filename) {
-      proxy_pass http://unicorn_<%= @deploy[:domains].first %>;
+      proxy_pass http://unicorn_<%= @application[:domains].first %>;
       break;
     }
   }
@@ -79,36 +79,36 @@ server {
 
   error_page 500 502 503 504 /500.html;
   location = /500.html {
-    root <%= @deploy[:absolute_document_root] %>;
+    root <%= @application[:absolute_document_root] %>;
   }
 }
 
-<% if @deploy[:ssl_support] %>
+<% if @application[:ssl_support] %>
 server {
   listen   443;
-  server_name <%= @deploy[:domains].join(" ") %> <%= node[:hostname] %>;
-  access_log <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>-ssl.access.log;
+  server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>-ssl.access.log;
 
   client_max_body_size 4G;
   add_header 'Access-Control-Allow-Origin' *;
 
   ssl on;
-  ssl_certificate /etc/nginx/ssl/<%= @deploy[:domains].first %>.crt;
-  ssl_certificate_key /etc/nginx/ssl/<%= @deploy[:domains].first %>.key;
-  <% if @deploy[:ssl_certificate_ca] -%>
-  ssl_client_certificate /etc/nginx/ssl/<%= @deploy[:domains].first %>.ca;
+  ssl_certificate /etc/nginx/ssl/<%= @application[:domains].first %>.crt;
+  ssl_certificate_key /etc/nginx/ssl/<%= @application[:domains].first %>.key;
+  <% if @application[:ssl_certificate_ca] -%>
+  ssl_client_certificate /etc/nginx/ssl/<%= @application[:domains].first %>.ca;
   <% end -%>
 
   keepalive_timeout 5;
 
-  root <%= @deploy[:absolute_document_root] %>;
+  root <%= @application[:absolute_document_root] %>;
 
-  <% if @deploy[:nginx] && @deploy[:nginx][:client_max_body_size] %>
-    client_max_body_size <%= @deploy[:nginx][:client_max_body_size] %>;
+  <% if @application[:nginx] && @application[:nginx][:client_max_body_size] %>
+    client_max_body_size <%= @application[:nginx][:client_max_body_size] %>;
   <% end %>
 
   location / {
-  <% if @deploy[:nginx] && node[:nginx_basic_auth][:use] %>
+  <% if @application[:nginx] && node[:nginx_basic_auth][:use] %>
     auth_basic "Restricted";
     auth_basic_user_file /etc/nginx/.htpasswd;
   <% end %>
@@ -146,14 +146,14 @@ server {
     # If you don't find the filename in the static files
     # Then request it from the unicorn server
     if (!-f $request_filename) {
-      proxy_pass http://unicorn_<%= @deploy[:domains].first %>;
+      proxy_pass http://unicorn_<%= @application[:domains].first %>;
       break;
     }
   }
 
   error_page 500 502 503 504 /500.html;
   location = /500.html {
-    root <%= @deploy[:absolute_document_root] %>;
+    root <%= @application[:absolute_document_root] %>;
   }
 }
 <% end %>
