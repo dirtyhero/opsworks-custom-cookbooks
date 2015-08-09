@@ -35,7 +35,9 @@ node[:deploy].each do |application, deploy|
     group "root"
     mode 0644
     variables({
-                :deploy => application  ### ここで代入している
+      :deploy => deploy,
+      :application => application,
+      :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     })
     notifies :restart, "service[nginx]"
   end
