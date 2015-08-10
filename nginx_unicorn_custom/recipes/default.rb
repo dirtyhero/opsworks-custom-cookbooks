@@ -2,11 +2,12 @@ include_recipe 'nginx'
 # setup Unicorn service per app
 node[:deploy].each do |application, deploy|
 
-  #deploy = node[:deploy][application]
+  Chef::Log.debug("-----application-----"
+  Chef::Log.debug("#{application}")
+  Chef::Log.debug("-----deploy-----"
+  Chef::Log.debug("#{deploy}")
 
-  deploy.each do |key,value|
-    Chef::Log.debug("deploy[:#{key}] = '#{value}'")
-  end
+  #deploy = node[:deploy][application]
 
   execute "restart Rails app #{application}" do
     cwd deploy[:current_path]
