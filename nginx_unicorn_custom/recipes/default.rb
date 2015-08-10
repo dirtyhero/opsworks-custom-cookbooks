@@ -38,7 +38,7 @@ node[:deploy].each do |application, deploy|
       :deploy => deploy,
       :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     })
-    if File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{application_name}")
+    if File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{application}")
       notifies :reload, "service[nginx]", :delayed
     end
   end
