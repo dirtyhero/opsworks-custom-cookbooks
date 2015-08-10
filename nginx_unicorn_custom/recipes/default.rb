@@ -22,7 +22,6 @@ node[:deploy].each do |application, deploy|
     source "unicorn.conf.erb"
     variables(
       :deploy => deploy,
-      :application => application,
       :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     )
     notifies :run, "execute[restart Rails app #{application}]"
@@ -37,10 +36,11 @@ node[:deploy].each do |application, deploy|
     mode 0644
     variables({
       :deploy => deploy,
-      :application => application,
       :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     })
-    notifies :restart, "service[nginx]"
+    if File.exists?("#{node[:nginx][:dir]}/sites-enabled/#{application_name}")
+      notifies :reload, "service[nginx]", :delayed
+    end
   end
 
   # template "#{deploy[:deploy_to]}/shared/config/database.yml" do
