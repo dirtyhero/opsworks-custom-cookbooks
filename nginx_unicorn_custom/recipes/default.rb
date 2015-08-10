@@ -1,7 +1,7 @@
 include_recipe 'nginx'
 # setup Unicorn service per app
 node[:deploy].each do |application, deploy|
-
+  Chef::Log.level = :debug
   Chef::Log.debug("-----application-----")
   Chef::Log.debug("#{application}")
   Chef::Log.debug("-----deploy-----")
