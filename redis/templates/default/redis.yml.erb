@@ -1,2 +1,17 @@
-host: <%= node[:redis][:host] %>
-port: <%= node[:redis][:port] || 6379 %>
+development:
+  redis_namespace: <%= node[:redis][:namespace_prefix] %>_development
+  redis:
+    host: <%= node[:redis][:host] %>
+    port: <%= node[:redis][:port] || 6379 %>
+
+test:
+  redis_namespace: <%= node[:redis][:namespace_prefix] %>_test
+  redis:
+    host: <%= node[:redis][:host] %>
+    port: <%= node[:redis][:port] || 6379 %>
+
+production:
+  redis_namespace: <%= node[:redis][:namespace_prefix] %>
+  redis:
+    host: <%= node[:redis][:host] %>
+    port: <%= node[:redis][:port] || 6379 %>
