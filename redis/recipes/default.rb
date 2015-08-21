@@ -17,12 +17,6 @@ node[:deploy].each do |application, deploy|
     mode '0644'
     group deploy[:group]
     owner deploy[:user]
-
-    # define variable “@redis” to be used in the ERB template
-    variables(
-      :redis => node[:redis] || {}
-    )
-
     # only generate a file if there is Redis configuration
     only_if do
       deploy[:redis][:host].present? && File.directory?("#{deploy[:deploy_to]}/current/config/")
