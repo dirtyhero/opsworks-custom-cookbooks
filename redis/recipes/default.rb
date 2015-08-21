@@ -19,7 +19,7 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     # only generate a file if there is Redis configuration
     only_if do
-      deploy[:redis][:host].present? && File.directory?("#{deploy[:deploy_to]}/current/config/")
+      node[:redis][:host].present? && File.directory?("#{deploy[:deploy_to]}/current/config/")
     end
     notifies :run, "execute[restart Rails app #{application}]"
   end
