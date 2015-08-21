@@ -1,5 +1,11 @@
 node[:deploy].each do |application, deploy|
 
+  Chef::Log.level = :debug
+  Chef::Log.debug("-----application-----")
+  Chef::Log.debug("#{application}")
+  Chef::Log.debug("-----deploy-----")
+  Chef::Log.debug("#{deploy}")
+
   execute "restart Rails app #{application}" do
     cwd deploy[:current_path]
     command node[:opsworks][:rails_stack][:restart_command]
