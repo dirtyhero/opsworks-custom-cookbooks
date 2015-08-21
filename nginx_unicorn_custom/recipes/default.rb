@@ -7,8 +7,6 @@ node[:deploy].each do |application, deploy|
   Chef::Log.debug("-----deploy-----")
   Chef::Log.debug("#{deploy}")
 
-  #deploy = node[:deploy][application]
-
   execute "restart Rails app #{application}" do
     cwd deploy[:current_path]
     command node[:opsworks][:rails_stack][:restart_command]
@@ -25,7 +23,6 @@ node[:deploy].each do |application, deploy|
       :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
     )
     notifies :run, "execute[restart Rails app #{application}]"
-
   end
 
   template "#{node[:nginx][:dir]}/sites-available/#{application}" do
