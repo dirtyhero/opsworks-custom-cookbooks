@@ -20,7 +20,7 @@ node[:deploy].each do |application, deploy|
 
     # define variable “@redis” to be used in the ERB template
     variables(
-      :redis => deploy[:redis][:host] || {}
+      :redis => node[:redis] || {}
     )
 
     # only generate a file if there is Redis configuration
