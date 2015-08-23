@@ -11,14 +11,13 @@ node[:deploy].each do |application, deploy|
     command node[:opsworks][:rails_stack][:restart_command]
     action :nothing
   end
-
-  file '#{deploy[:deploy_to]}/current/config/redis.yml' do
+  file "#{deploy[:deploy_to]}/current/config/redis.yml" do
     mode '0644'
     group deploy[:group]
     owner deploy[:user]
     # only generate a file if there is Redis configuration
     only_if do
-      node[:redis][:host].present? && File.directory?("#{deploy[:deploy_to]}/current/config/")
+      File.directory?("#{deploy[:deploy_to]}/current/config/")
     end
     notifies :run, "execute[restart Rails app #{application}]"
   end
