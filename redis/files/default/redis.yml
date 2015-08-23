@@ -1,0 +1,17 @@
+development:
+  redis_namespace: RepeupCure_development
+  redis:
+    host: localhost
+    port: 6379
+
+test:
+  redis_namespace: RepeupCure_test
+  redis:
+    host: localhost
+    port: 6379
+
+production:
+  redis_namespace: Figaro.env.redis_namespace
+  redis:
+    host: Figaro.env.redis_host
+    port: Figaro.env.redis_port

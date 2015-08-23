@@ -12,8 +12,7 @@ node[:deploy].each do |application, deploy|
     action :nothing
   end
 
-  template "#{deploy[:deploy_to]}/current/config/redis.yml" do
-    source "redis.yml.erb"
+  file '#{deploy[:deploy_to]}/current/config/redis.yml' do
     mode '0644'
     group deploy[:group]
     owner deploy[:user]
