@@ -1,17 +1,17 @@
 development:
-  redis_namespace: <%= node[:redis][:namespace_prefix] %>_development
+  redis_namespace: <%= ENV["REDIS_NAMESPACE_PREFIX"] %>
   redis:
-    host: <%= node[:redis][:host] %>
-    port: <%= node[:redis][:port] || 6379 %>
+    host: <%= ENV["REDIS_HOST"] %>
+    port: <%= ENV["REDIS_PORT"] || 6379 %>
 
 test:
-  redis_namespace: <%= node[:redis][:namespace_prefix] %>_test
+  redis_namespace: <%= ENV["REDIS_NAMESPACE_PREFIX"] %>
   redis:
-    host: <%= node[:redis][:host] %>
-    port: <%= node[:redis][:port] || 6379 %>
+    host: <%= ENV["REDIS_HOST"] %>
+    port: <%= ENV["REDIS_PORT"] || 6379 %>
 
 production:
-  redis_namespace: <%= node[:redis][:namespace_prefix] %>
+  redis_namespace: <%= ENV["REDIS_NAMESPACE_PREFIX"] %>
   redis:
-    host: <%= node[:redis][:host] %>
-    port: <%= node[:redis][:port] || 6379 %>
+    host: <%= ENV["REDIS_HOST"] %>
+    port: <%= ENV["REDIS_PORT"] || 6379 %>
