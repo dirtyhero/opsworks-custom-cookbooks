@@ -11,7 +11,7 @@ node[:deploy].each do |application, deploy|
     command node[:opsworks][:rails_stack][:restart_command]
     action :nothing
   end
-  file "#{deploy[:deploy_to]}/current/config/redis.yml" do
+  cookbook_file "#{deploy[:deploy_to]}/current/config/redis.yml" do
     mode '0644'
     group deploy[:group]
     owner deploy[:user]
