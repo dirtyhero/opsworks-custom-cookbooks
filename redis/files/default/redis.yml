@@ -11,7 +11,7 @@ test:
     port: 6379
 
 production:
-  redis_namespace: Figaro.env.redis_namespace
+  redis_namespace: Figaro.env.REDIS_NAMESPACE
   redis:
-    host: Figaro.env.redis_host
-    port: Figaro.env.redis_port
+    host: Figaro.env.REDIS_HOST
+    port: Figaro.env.REDIS_PORT
