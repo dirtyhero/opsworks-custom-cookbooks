@@ -4,6 +4,7 @@ metadata
 cookbook 'postfix'
 cookbook 'dovecot'
 cookbook 'apache2'
+cookbook 'mailman',git:"https://github.com/computerlyrik/chef-mailman"
 cookbook 'user_management'
 cookbook 'htpasswd'
 cookbook 'nginx_basic_auth', path: 'nginx_basic_auth'
