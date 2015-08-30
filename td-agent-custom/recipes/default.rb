@@ -36,9 +36,6 @@ end
 
   Chef::Log.level = :debug
   Chef::Log.debug("#{apps}")
-  Chef::Log.debug("-----deploy-----")
-  Chef::Log.debug("#{deploy}")
-
 
 template '/etc/td-agent/td-agent.conf' do
   source 'td_agent.conf.erb'
