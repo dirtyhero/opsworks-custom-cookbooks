@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
+apps = node[:deploy][:application]
 script "install td-agent" do
   interpreter "bash"
   cwd "/tmp"
@@ -39,7 +39,7 @@ end
   Chef::Log.debug("-----deploy-----")
   Chef::Log.debug("#{deploy}")
 
-apps = node[:deploy][:application]
+
 template '/etc/td-agent/td-agent.conf' do
   source 'td_agent.conf.erb'
   owner 'td-agent'
