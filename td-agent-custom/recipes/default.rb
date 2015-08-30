@@ -6,7 +6,7 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-apps = node[:deploy][:application]
+
 script "install td-agent" do
   interpreter "bash"
   cwd "/tmp"
@@ -34,18 +34,11 @@ node["td_agent"]["plugins"].each do |plugin|
   end
 end
 
-  Chef::Log.level = :debug
-  Chef::Log.debug("#{apps}")
-
 template '/etc/td-agent/td-agent.conf' do
   source 'td_agent.conf.erb'
   owner 'td-agent'
   group 'td-agent'
   mode '0644'
-  variables({
-    :apps => apps,
-    :environment => OpsWorks::Escape.escape_double_quotes(deploy[:environment_variables])
-  })
 end
 
 service "td-agent" do
