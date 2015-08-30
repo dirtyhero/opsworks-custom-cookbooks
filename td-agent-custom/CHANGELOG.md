@@ -1,11 +1,11 @@
-redis CHANGELOG
-===============
+td-agent-custom CHANGELOG
+=========================
 
-This file is used to list changes made in each version of the redis cookbook.
+This file is used to list changes made in each version of the td-agent-custom cookbook.
 
 0.1.0
 -----
-- [your_name] - Initial release of redis
+- [your_name] - Initial release of td-agent-custom
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.

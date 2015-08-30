@@ -1,0 +1,54 @@
+<source>
+  type forward
+  port 24224
+</source>
+
+<% @apps.each do |app| %>
+<source>
+  type tail
+  format /^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) [(?<time>[^]]*)] "(?<method>S+)(?: +(?<path>[^ ]*) +S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^"]*)" "(?<agent>[^"]*)" (?<response_time>[^ ]*))?$/
+  time_format %d/%b/%Y:%H:%M:%S %z
+  path /var/log/nginx/<%= app[:domains].first %>.access.<%= log_format_name %>.log
+  tag nginx.access.<%= app %>
+</source>
+
+<% end %>
+
+<match ** >
+  type forest
+  subtype copy
+  <template>
+    #Amazon S3
+    <store>
+      type s3
+      aws_key_id  <%= node['td_agent']['aws_key_id'] %>
+      aws_sec_key <%= node['td_agent']['aws_sec_key'] %>
+
+      path ${tag}/
+
+      s3_bucket <%= node['td_agent']['s3_bucket'] %>
+      s3_region <%= node['td_agent']['s3_region'] %>
+      s3_object_key_format %{path}%{time_slice}${tag}_%{index}_%{hostname}.%{file_extension}
+
+      time_slice_format %Y/%m/%d/%H/%Y%m%d%H%M_
+      time_slice_wait 10m
+      buffer_path /var/log/td-agent/buffer/s3_${tag}
+      store_as text
+      utc
+      buffer_chunk_limit 256m
+    </store>
+  </template>
+
+  #Elasticsearch
+  <case nginx.access.*>
+    <store>
+      type elasticsearch
+      host <%= node['td_agent']['elastic_search_host'] %>
+      port <%= node['td_agent']['elastic_search_port'] %>
+      type_name ${tag}
+      logstash_format true
+      logstash_prefix access_log
+      logstash_dateformat %Y%m
+    </store>
+  </case>
+</match>

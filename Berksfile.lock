@@ -1,0 +1,42 @@
+DEPENDENCIES
+  dovecot
+  export-envs
+    path: export-envs
+  htpasswd
+  nginx_basic_auth
+    path: nginx_basic_auth
+  nginx_unicorn_custom
+    path: nginx_unicorn_custom
+  node_dump
+    path: node_dump
+  opsworks-custom-cookbooks
+    path: .
+    metadata: true
+  postfix
+  td-agent-custom
+    path: td-agent-custom
+  user_management
+  yum
+
+GRAPH
+  build-essential (2.2.3)
+  dovecot (2.2.2)
+    ohai (>= 0.0.0)
+  export-envs (0.1.0)
+  htpasswd (0.2.4)
+    python (>= 0.0.0)
+  nginx_basic_auth (0.1.0)
+    htpasswd (>= 0.0.0)
+  nginx_unicorn_custom (0.1.0)
+  node_dump (0.1.0)
+  ohai (2.0.1)
+  opsworks-custom-cookbooks (0.1.0)
+  postfix (3.7.0)
+  python (1.4.6)
+    build-essential (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  td-agent-custom (0.1.0)
+  user_management (1.0.1)
+  yum (3.6.3)
+  yum-epel (0.6.2)
+    yum (~> 3.2)
