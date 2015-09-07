@@ -38,6 +38,11 @@ server {
     proxy_set_header Host $http_host;
     proxy_redirect off;
 
+    if ($http_x_forwarded_proto == "https") {
+      proxy_set_header HTTP_X_FORWARDED_PROTO $http_x_forwarded_proto;
+    }
+
+    add_header X-XSS-Protection "1; mode=block";
     add_header 'Access-Control-Allow-Origin' "$http_origin";
     add_header 'Access-Control-Allow-Credentials' 'true';
     if ($request_method = 'OPTIONS') {
