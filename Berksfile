@@ -16,7 +16,3 @@ cookbook "build-essential"
 cookbook "ark"
 cookbook "git"
 cookbook "nginx", path: "nginx"
-cookbook "java"
-cookbook "elasticsearch"
-cookbook "kibana", git: "https://github.com/realityforge/chef-kibana.git"
-
