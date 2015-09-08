@@ -30,16 +30,14 @@ server {
   <% end %>
 
   location / {
-    proxy_set_header Host                   $host;
-    proxy_set_header X-Real-IP              $remote_addr;
-    proxy_set_header X-Forwarded-Proto      $http_x_forwarded_proto;
-    proxy_set_header X-Forwarded-Host       $host;
-    proxy_set_header X-Forwarded-Server     $host;
-    proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
-    try_files $uri $uri/index.html $uri/index.htm @unicorn;
+    try_files $uri/index.html $uri/index.htm @unicorn;
   }
 
   location @unicorn {
+    proxy_set_header X-Real-IP              $remote_addr;
+    proxy_set_header X-Forwarded-Proto      $http_x_forwarded_proto;
+    proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
     proxy_redirect off;
 
     add_header X-XSS-Protection "1; mode=block";
@@ -101,16 +99,14 @@ server {
   <% end %>
 
   location / {
-    proxy_set_header Host                   $host;
-    proxy_set_header X-Real-IP              $remote_addr;
-    proxy_set_header X-Forwarded-Proto      $http_x_forwarded_proto;
-    proxy_set_header X-Forwarded-Host       $host;
-    proxy_set_header X-Forwarded-Server     $host;
-    proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
     try_files $uri $uri/index.html $uri/index.htm @unicorn;
   }
 
   location @unicorn {
+    proxy_set_header X-Real-IP              $remote_addr;
+    proxy_set_header X-Forwarded-Proto      $http_x_forwarded_proto;
+    proxy_set_header X-Forwarded-For        $proxy_add_x_forwarded_for;
+    proxy_set_header Host $http_host;
     proxy_redirect off;
 
     add_header X-XSS-Protection "1; mode=block";
