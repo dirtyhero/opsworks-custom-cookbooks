@@ -34,6 +34,13 @@ node["td_agent"]["plugins"].each do |plugin|
   end
 end
 
+directory '/etc/td-agent/conf.d' do
+  owner 'td-agent'
+  group 'td-agent'
+  mode '0755'
+  action :create
+end
+
 template '/etc/td-agent/td-agent.conf' do
   source 'td_agent.conf.erb'
   owner 'td-agent'
