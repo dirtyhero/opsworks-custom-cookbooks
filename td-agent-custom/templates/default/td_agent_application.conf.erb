@@ -1,6 +1,6 @@
 <source>
   type tail
-  path <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>.access.<%= log_format_name %>.log
+  path <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>.access.<%= @deploy[:log_format].first %>.log
   pos_file /var/log/td-agent/<%= @deploy[:domains].first %>-access.log.pos
   tag nginx.access.<%= @application %>
    format /^(?<host>[^ ]*) [^ ]* (?<user>[^ ]*) \[(?<time>[^\]]*)\] (?<method>\S+)(?: +(?<path>[^ ]*) +\S*)? (?<code>[^ ]*) (?<size>[^ ]*) (?<referer>[^ ]*) (?<agent>[^ ]*) (?<response_time>[^ ]*)$/
