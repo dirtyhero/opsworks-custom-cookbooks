@@ -3,6 +3,6 @@
   path <%= node[:nginx][:log_dir] %>/<%= @deploy[:domains].first %>.access.<%= @deploy[:log_format].first %>.log
   pos_file /var/log/td-agent/<%= @deploy[:domains].first %>-access.log.pos
   tag nginx.access.<%= @application %>
-   format /^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)") (?<request_time >[^ ]*)?/
-   time_format %d/%b/%Y:%H:%M:%S %z
+  format /^(?<remote>[^ ]*) (?<host>[^ ]*) (?<user>[^ ]*) \[(?<time>[^\]]*)\] "(?<method>\S+)(?: +(?<path>[^ ]*) +\S*)?" (?<code>[^ ]*) (?<size>[^ ]*)(?: "(?<referer>[^\"]*)" "(?<agent>[^\"]*)") (?<request_time >[^ ]*)?/
+  time_format %d/%b/%Y:%H:%M:%S %z
 </source>

@@ -43,10 +43,6 @@ server {
     proxy_set_header Host $http_host;
     proxy_redirect off;
 
-    add_header X-XSS-Protection "1; mode=block";
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options nosniff;
-
   <% if node[:nginx] && node[:nginx][:proxy_read_timeout] -%>
     proxy_read_timeout <%= node[:nginx][:proxy_read_timeout] %>;
   <% end -%>
@@ -72,6 +68,9 @@ server {
   error_page 500 502 503 504 /500.html;
   location = /500.html {
     root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
   }
 }
 
@@ -102,10 +101,7 @@ server {
   <% end %>
 
   location / {
-    add_header X-XSS-Protection "1; mode=block";
-    add_header X-Frame-Options "SAMEORIGIN";
-    add_header X-Content-Type-Options nosniff;
-    try_files $uri $uri/index.html $uri/index.htm @unicorn;
+    try_files$uri $uri/index.html $uri/index.htm @unicorn;
   }
 
   location @unicorn {
@@ -136,6 +132,9 @@ server {
   error_page 500 502 503 504 /500.html;
   location = /500.html {
     root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
   }
 }
 <% end %>
