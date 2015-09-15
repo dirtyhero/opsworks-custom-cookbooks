@@ -72,6 +72,20 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options nosniff;
   }
+
+  location  ~ \.html$ {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
+  location /favicon {
+    empty_gif;
+    access_log    off;
+    log_not_found off;
+  }
+
 }
 
 <% if @application[:ssl_support] %>
@@ -136,5 +150,19 @@ server {
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options nosniff;
   }
+
+  location = ~ ^/(.*\.html)$ {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
+  location /favicon {
+    empty_gif;
+    access_log    off;
+    log_not_found off;
+  }
+
 }
 <% end %>
