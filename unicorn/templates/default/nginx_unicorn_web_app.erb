@@ -80,6 +80,20 @@ server {
     add_header X-Content-Type-Options nosniff;
   }
 
+  location  /.robots.txt {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
+  location  ~ \.xml$ {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
   location /favicon {
     empty_gif;
     access_log    off;
@@ -151,7 +165,21 @@ server {
     add_header X-Content-Type-Options nosniff;
   }
 
-  location = ~ ^/(.*\.html)$ {
+  location  ~ \.html$ {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
+  location  /.robots.txt {
+    root <%= @application[:absolute_document_root] %>;
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Frame-Options "SAMEORIGIN";
+    add_header X-Content-Type-Options nosniff;
+  }
+
+  location  ~ \.xml$ {
     root <%= @application[:absolute_document_root] %>;
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Frame-Options "SAMEORIGIN";
