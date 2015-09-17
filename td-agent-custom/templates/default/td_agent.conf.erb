@@ -8,7 +8,7 @@ include conf.d/*.conf
   cw_endpoint monitoring.ap-northeast-1.amazonaws.com
 
   namespace AWS/EC2
-  metric_name CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  metric_name CPUCreditBalance,CPUCreditUsage,CPUUtilization,DiskReadBytes,DiskReadOps,DiskWriteBytes,DiskWriteOps,NetworkIn,NetworkOut,StatusCheckFailed,StatusCheckFailed_Instance,StatusCheckFailed_System
   dimensions_name InstanceId
   dimensions_value <%= @instance_id %>
 </source>
@@ -60,9 +60,9 @@ include conf.d/*.conf
   <case cloudwatch.*>
     <store>
       type             zabbix
-      zabbix_server    egg-cart:egg-cart@zabbix.temonalab.com
+      zabbix_server    133.242.85.125
       host             <%= @instance_id %>
-      name_keys        CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+      name_keys        CPUCreditBalance,CPUCreditUsage,CPUUtilization,DiskReadBytes,DiskReadOps,DiskWriteBytes,DiskWriteOps,NetworkIn,NetworkOut,StatusCheckFailed,StatusCheckFailed_Instance,StatusCheckFailed_System
       add_key_prefix   cloudwatch
     </store>
   </case>
