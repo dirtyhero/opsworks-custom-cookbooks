@@ -1,6 +1,19 @@
 include conf.d/*.conf
 
 <source>
+  type cloudwatch
+  tag  cloudwatch.<%= @instance_id %>
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/EC2
+  metric_name CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  dimensions_name InstanceId
+  dimensions_value <%= @instance_id %>
+</source>
+
+<source>
   type forward
   port 24224
 </source>
@@ -42,4 +55,16 @@ include conf.d/*.conf
       logstash_dateformat %Y%m
     </store>
   </case>
+
+  #cloudwatch
+  <case cloudwatch.*>
+    <store>
+      type             zabbix
+      zabbix_server    egg-cart:egg-cart@zabbix.temonalab.com
+      host             <%= @instance_id %>
+      name_keys        CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+      add_key_prefix   cloudwatch
+    </store>
+  </case>
+
 </match>

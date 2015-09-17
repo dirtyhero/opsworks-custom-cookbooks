@@ -10,6 +10,7 @@
   Chef::Log.level = :debug
   Chef::Log.debug("-----td-agent-custom default start-----")
   instance_id=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id |cut -f 1`.chomp
+  hostname=`hostname`.chomp
   Chef::Log.debug("#{instance_id}")
   Chef::Log.debug("-----td-agent-custom default end-----")
 
@@ -52,6 +53,10 @@ template '/etc/td-agent/td-agent.conf' do
   owner 'td-agent'
   group 'td-agent'
   mode '0644'
+  variables({
+  :hostname => hostname,
+  :instance_id => instance_id
+  })
 end
 
 service "td-agent" do
