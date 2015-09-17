@@ -7,6 +7,12 @@
 # All rights reserved - Do Not Redistribute
 #
 
+  Chef::Log.level = :debug
+  Chef::Log.debug("-----td-agent-custom default start-----")
+  instance_id=`/usr/bin/curl -s http://169.254.169.254/latest/meta-data/instance-id |cut -f 1`.chomp
+  Chef::Log.debug("#{instance_id}")
+  Chef::Log.debug("-----td-agent-custom default end-----")
+
 script "install td-agent" do
   interpreter "bash"
   cwd "/tmp"
