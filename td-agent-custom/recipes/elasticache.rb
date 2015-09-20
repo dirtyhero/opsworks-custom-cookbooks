@@ -1,5 +1,5 @@
-template '/etc/td-agent/conf.d/elb.conf' do
-  source 'td_agent_elb.conf.erb'
+template '/etc/td-agent/conf.d/elasticache.conf' do
+  source 'td_agent_elasticache.conf.erb'
   owner 'td-agent'
   group 'td-agent'
   mode '0644'
