@@ -12,7 +12,7 @@
   dimensions_value <%= elb %>
 </source>
 
-<match cloudwatch_elb.**>
+<match cloudwatch_elb.<%= elb %>>
   type copy
  <store>
   type             zabbix
