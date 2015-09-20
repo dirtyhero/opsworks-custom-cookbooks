@@ -1,0 +1,26 @@
+<% node['td_agent']['elb'].each do |elb| %>
+<source>
+  type cloudwatch
+  tag  cloudwatch_elb.<%= elb %>
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/ELB
+  metric_name HealthyHostCount,HTTPCode_Backend_2XX,HTTPCode_Backend_3XX,HTTPCode_Backend_4XX,HTTPCode_Backend_5XX,HTTPCode_ELB_4XX,Latency,RequestCount,UnHealthyHostCount
+  dimensions_name LoadBalancerName
+  dimensions_value <%= elb %>
+</source>
+
+<match cloudwatch_elb.**>
+  type copy
+ <store>
+  type             zabbix
+  zabbix_server    133.242.85.125
+  host             <%= node['td_agent']['host'] %>
+  name_keys        HealthyHostCount, HTTPCode_Backend_2XX, HTTPCode_Backend_3XX, HTTPCode_Backend_4XX, HTTPCode_Backend_5XX, HTTPCode_ELB_4XX, Latency, RequestCount, UnHealthyHostCount
+  add_key_prefix   cloudwatch_elb.<%= elb %>
+ </store>
+</match>
+
+<% end %>
