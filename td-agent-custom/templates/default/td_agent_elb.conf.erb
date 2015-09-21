@@ -18,7 +18,7 @@
   type             zabbix
   zabbix_server    133.242.85.125
   host             <%= node['td_agent']['host'] %>
-  name_keys        HealthyHostCount, HTTPCode_Backend_2XX, HTTPCode_Backend_3XX, HTTPCode_Backend_4XX, HTTPCode_Backend_5XX, HTTPCode_ELB_4XX, Latency, RequestCount, UnHealthyHostCount
+  name_keys        HealthyHostCount,HTTPCode_Backend_2XX,HTTPCode_Backend_3XX,HTTPCode_Backend_4XX,HTTPCode_Backend_5XX,HTTPCode_ELB_4XX,Latency,RequestCount,UnHealthyHostCount
   add_key_prefix   cloudwatch_elb.<%= elb %>
  </store>
 </match>
