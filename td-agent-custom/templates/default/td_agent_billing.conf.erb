@@ -1,0 +1,50 @@
+<% %w(AWSDataTransfer AWSQueueService AmazonCloudFront AmazonDynamoDB AmazonEC2 AmazonElastiCache AmazonRDS AmazonRoute53 AmazonS3 AmazonSNS).each do |service| %>
+<source>
+  type cloudwatch
+  tag  cloudwatch_billing.<%= service %>
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/Billing
+  metric_name EstimatedCharges
+  dimensions_name ServiceName,Currency
+  dimensions_value <%= service %>,USD
+</source>
+
+<match cloudwatch_billing.<%= service %>>
+  type copy
+ <store>
+  type             zabbix
+  zabbix_server    133.242.85.125
+  host             <%= node['td_agent']['host'] %>
+  name_keys        EstimatedCharges
+  add_key_prefix   cloudwatch_billing.<%= service %>
+ </store>
+</match>
+
+<% end %>
+
+<source>
+  type cloudwatch
+  tag  cloudwatch_billing.total
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/Billing
+  metric_name EstimatedCharges
+  dimensions_name Currency
+  dimensions_value USD
+</source>
+
+<match cloudwatch_billing.total>
+  type copy
+ <store>
+  type             zabbix
+  zabbix_server    133.242.85.125
+  host             <%= node['td_agent']['host'] %>
+  name_keys        EstimatedCharges
+  add_key_prefix   cloudwatch_billing.total
+ </store>
+</match>
