@@ -10,6 +10,9 @@
   metric_name EstimatedCharges
   dimensions_name ServiceName,Currency
   dimensions_value <%= service %>,USD
+  statistics Average
+  interval 7200
+  period 21600
 </source>
 
 <match cloudwatch_billing.<%= service %>>
@@ -36,6 +39,9 @@
   metric_name EstimatedCharges
   dimensions_name Currency
   dimensions_value USD
+  statistics Average
+  interval 7200
+  period 21600
 </source>
 
 <match cloudwatch_billing.total>
