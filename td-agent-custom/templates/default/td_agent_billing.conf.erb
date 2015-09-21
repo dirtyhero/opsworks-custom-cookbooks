@@ -4,7 +4,7 @@
   tag  cloudwatch_billing.<%= service %>
   aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
   aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
-  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+  cw_endpoint monitoring.us-east-1.amazonaws.com
 
   namespace AWS/Billing
   metric_name EstimatedCharges
@@ -33,7 +33,7 @@
   tag  cloudwatch_billing.total
   aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
   aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
-  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+  cw_endpoint monitoring.us-east-1.amazonaws.com
 
   namespace AWS/Billing
   metric_name EstimatedCharges
