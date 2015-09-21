@@ -1,0 +1,26 @@
+<% node['td_agent']['rds'].each do |rds| %>
+<source>
+  type cloudwatch
+  tag  cloudwatch_rds.<%= rds %>
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/RDS
+  metric_name CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  dimensions_name DBInstanceIdentifier
+  dimensions_value <%= rds %>
+</source>
+
+<match cloudwatch_rds.<%= rds %>>
+  type copy
+ <store>
+  type             zabbix
+  zabbix_server    133.242.85.125
+  host             <%= node['td_agent']['host'] %>
+  name_keys        CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  add_key_prefix   cloudwatch_rds.<%= rds %>
+ </store>
+</match>
+
+<% end %>
