@@ -1,0 +1,26 @@
+<% %w(groups items last_navis optout_uuids stage_cv_logs stage_pv_logs sum_orders uuid_maps visit_frequencies).each do |table| %>
+<source>
+  type cloudwatch
+  tag  cloudwatch_dynamodb.<%= table %>
+  aws_key_id  <%= node['td_agent']['zabbix']['aws_key_id'] %>
+  aws_sec_key <%= node['td_agent']['zabbix']['aws_sec_key'] %>
+  cw_endpoint monitoring.ap-northeast-1.amazonaws.com
+
+  namespace AWS/RDS
+  metric_name ConsumedReadCapacityUnits,ConsumedWriteCapacityUnits,ProvisionedReadCapacityUnits,ProvisionedWriteCapacityUnits,ReadThrottleEvents,ReturnedItemCount,SuccessfulRequestLatency,ThrottledRequests,UserErrors,WriteThrottleEvents,BatchWriteItem.SuccessfulRequestLatency,GetItem.SuccessfulRequestLatency,PutItem.SuccessfulRequestLatency,PutItem.ThrottledRequests,Query.ReturnedItemCount,Query.SuccessfulRequestLatency,Scan.ReturnedItemCount,Scan.SuccessfulRequestLatency
+  dimensions_name TableName
+  dimensions_value <%= table %>
+</source>
+
+<match cloudwatch_dynamodb.<%= table %>>
+  type copy
+ <store>
+  type             zabbix
+  zabbix_server    133.242.85.125
+  host             <%= node['td_agent']['host'] %>
+  name_keys        ConsumedReadCapacityUnits,ConsumedWriteCapacityUnits,ProvisionedReadCapacityUnits,ProvisionedWriteCapacityUnits,ReadThrottleEvents,ReturnedItemCount,SuccessfulRequestLatency,ThrottledRequests,UserErrors,WriteThrottleEvents,BatchWriteItem.SuccessfulRequestLatency,GetItem.SuccessfulRequestLatency,PutItem.SuccessfulRequestLatency,PutItem.ThrottledRequests,Query.ReturnedItemCount,Query.SuccessfulRequestLatency,Scan.ReturnedItemCount,Scan.SuccessfulRequestLatency
+  add_key_prefix   cloudwatch_dynamodb.<%= table %>
+ </store>
+</match>
+
+<% end %>

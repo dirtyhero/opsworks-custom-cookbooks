@@ -7,7 +7,7 @@
   cw_endpoint monitoring.ap-northeast-1.amazonaws.com
 
   namespace AWS/RDS
-  metric_name CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  metric_name BinLogDiskUsage,CPUCreditBalance,CPUCreditUsage,CPUUtilization,DatabaseConnections,DiskQueueDepth,FreeStorageSpace,FreeableMemory,NetworkReceiveThroughput,NetworkTransmitThroughput,ReadIOPS,ReadLatency,ReadThroughput,SwapUsage,WriteIOPS,WriteLatency,WriteThroughput
   dimensions_name DBInstanceIdentifier
   dimensions_value <%= rds %>
 </source>
@@ -18,7 +18,7 @@
   type             zabbix
   zabbix_server    133.242.85.125
   host             <%= node['td_agent']['host'] %>
-  name_keys        CPUUtilization,FreeStorageSpace,DiskQueueDepth,FreeableMemory,SwapUsage,ReadIOPS,ReadLatency,ReadThroughput,WriteIOPS,WriteLatency,WriteThroughput
+  name_keys        BinLogDiskUsage,CPUCreditBalance,CPUCreditUsage,CPUUtilization,DatabaseConnections,DiskQueueDepth,FreeStorageSpace,FreeableMemory,NetworkReceiveThroughput,NetworkTransmitThroughput,ReadIOPS,ReadLatency,ReadThroughput,SwapUsage,WriteIOPS,WriteLatency,WriteThroughput
   add_key_prefix   cloudwatch_rds.<%= rds %>
  </store>
 </match>
