@@ -10,7 +10,7 @@
   namespace AWS/ElastiCache
   metric_name BytesUsedForCache,CPUUtilization,CacheHits,CacheMisses,CurrConnections,CurrItems,Evictions,FreeableMemory,GetTypeCmds,KeyBasedCmds,NetworkBytesIn,NetworkBytesOut,NewConnections,Reclaimed,ReplicationLag,SetTypeCmds,StringBasedCmds,SwapUsage
   dimensions_name CacheClusterId,CacheNodeId
-  dimensions_value <%= elasticache+","+nodeid %>
+  dimensions_value <%= elasticache+","+"0001" %>
 </source>
 
 <match cloudwatch_elasticache.<%= elasticache %>>
