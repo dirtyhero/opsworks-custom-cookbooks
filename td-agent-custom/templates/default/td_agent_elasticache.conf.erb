@@ -1,5 +1,5 @@
 <% node['td_agent']['elasticache'].each do |elasticache| %>
-
+<% nodeid = elasticache.include?("00") ? "0"+elasticache.match(/[0-9][0-9][0-9]$/).to_s : "0001" %>
 <source>
   type cloudwatch
   tag  cloudwatch_elasticache.<%= elasticache %>
@@ -10,7 +10,7 @@
   namespace AWS/ElastiCache
   metric_name BytesUsedForCache,CPUUtilization,CacheHits,CacheMisses,CurrConnections,CurrItems,Evictions,FreeableMemory,GetTypeCmds,KeyBasedCmds,NetworkBytesIn,NetworkBytesOut,NewConnections,Reclaimed,ReplicationLag,SetTypeCmds,StringBasedCmds,SwapUsage
   dimensions_name CacheClusterId,CacheNodeId
-  dimensions_value <%= elasticache","+elasticache.include?("00") ? "0"+elasticache.match(/[0-9][0-9][0-9]$/).to_s : "0001" %>
+  dimensions_value <%= elasticache+","+nodeid %>
 </source>
 
 <match cloudwatch_elasticache.<%= elasticache %>>
