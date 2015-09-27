@@ -43,7 +43,7 @@ include conf.d/*.conf
     </store>
   </template>
 
-  #Elasticsearch
+  #Nginx
   <case nginx.access.*>
     <store>
       type elasticsearch
@@ -56,12 +56,12 @@ include conf.d/*.conf
     </store>
   </case>
 
-  #Elasticsearch
+  #Rails
   <case rails.*_production>
     <store>
       type elasticsearch
-      host
-      port
+      host <%= node['td_agent']['elastic_search_host'] %>
+      port <%= node['td_agent']['elastic_search_port'] %>
       type_name ${tag}
       logstash_format true
       logstash_prefix rails_log
