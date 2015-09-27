@@ -30,8 +30,6 @@ server {
   <% end %>
 
   location / {
-  if ( $request_uri != "/" ) {
-
   <% if node['nginx_basic_auth']['use'] %>
     auth_basic "Restricted";
     auth_basic_user_file /etc/nginx/.htpasswd;
