@@ -56,6 +56,19 @@ include conf.d/*.conf
     </store>
   </case>
 
+  #Elasticsearch
+  <case rails.*_production>
+    <store>
+      type elasticsearch
+      host
+      port
+      type_name ${tag}
+      logstash_format true
+      logstash_prefix rails_log
+      logstash_dateformat %Y%m
+    </store>
+  </case>
+
   #cloudwatch
   <case cloudwatch.*>
     <store>
