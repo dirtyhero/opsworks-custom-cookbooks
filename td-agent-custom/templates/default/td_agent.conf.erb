@@ -82,6 +82,19 @@ include conf.d/*.conf
     </store>
   </case>
 
+  #Dynamodb
+  <case dynamodb_errors.*>
+    <store>
+      type elasticsearch
+      host <%= node['td_agent']['elastic_search_host'] %>
+      port <%= node['td_agent']['elastic_search_port'] %>
+      type_name ${tag}
+      logstash_format true
+      logstash_prefix dynamodb_errors_log
+      logstash_dateformat %Y%m
+    </store>
+  </case>
+
   #cloudwatch
   <case cloudwatch.*>
     <store>
