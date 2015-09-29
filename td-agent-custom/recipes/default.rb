@@ -59,6 +59,16 @@ template '/etc/td-agent/td-agent.conf' do
   })
 end
 
+script "add nginx group" do
+  interpreter "bash"
+  cwd "/tmp"
+  user "root"
+  code <<-EOH
+  usermod -G nginx td-agent
+  EOH
+  not_if "grep ':td-agent' /etc/group"
+end
+
 service "td-agent" do
   action [ :enable, :restart ]
 end
