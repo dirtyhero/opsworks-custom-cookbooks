@@ -49,6 +49,9 @@ include conf.d/*.conf
       type elasticsearch
       host <%= node['td_agent']['elastic_search_host'] %>
       port <%= node['td_agent']['elastic_search_port'] %>
+      <% if node['td_agent']['elastic_search_scheme'] %>
+      scheme <%= node['td_agent']['elastic_search_scheme'] %>
+      <% end %>
       type_name ${tag}
       logstash_format true
       logstash_prefix access_log
@@ -62,6 +65,9 @@ include conf.d/*.conf
       type elasticsearch
       host <%= node['td_agent']['elastic_search_host'] %>
       port <%= node['td_agent']['elastic_search_port'] %>
+      <% if node['td_agent']['elastic_search_scheme'] %>
+      scheme <%= node['td_agent']['elastic_search_scheme'] %>
+      <% end %>
       type_name ${tag}
       logstash_format true
       logstash_prefix rails_log
@@ -75,6 +81,9 @@ include conf.d/*.conf
       type elasticsearch
       host <%= node['td_agent']['elastic_search_host'] %>
       port <%= node['td_agent']['elastic_search_port'] %>
+      <% if node['td_agent']['elastic_search_scheme'] %>
+      scheme <%= node['td_agent']['elastic_search_scheme'] %>
+      <% end %>
       type_name ${tag}
       logstash_format true
       logstash_prefix sdk_log
@@ -88,6 +97,9 @@ include conf.d/*.conf
       type elasticsearch
       host <%= node['td_agent']['elastic_search_host'] %>
       port <%= node['td_agent']['elastic_search_port'] %>
+      <% if node['td_agent']['elastic_search_scheme'] %>
+      scheme <%= node['td_agent']['elastic_search_scheme'] %>
+      <% end %>
       type_name ${tag}
       logstash_format true
       logstash_prefix dynamodb_errors_log
@@ -107,3 +119,4 @@ include conf.d/*.conf
   </case>
 
 </match>
+  
